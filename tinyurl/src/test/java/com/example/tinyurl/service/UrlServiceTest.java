@@ -1,6 +1,5 @@
 package com.example.tinyurl.service;
 
-import com.example.tinyurl.domain.Url;
 import com.example.tinyurl.dto.UrlRequestDto;
 import com.example.tinyurl.repository.UrlRepository;
 import com.example.tinyurl.util.Base62;
@@ -11,12 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 
 @DisplayName("URL 서비스 테스트")
 class UrlServiceTest {
