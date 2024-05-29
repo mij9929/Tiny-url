@@ -1,6 +1,5 @@
 package com.example.tinyurl.dto;
 
-import com.example.tinyurl.domain.Url;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
