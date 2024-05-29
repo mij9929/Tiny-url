@@ -1,8 +1,8 @@
 package com.example.tinyurl.repository;
 
-import com.example.tinyurl.domain.Url;
+import com.example.tinyurl.domain.ShortenUrl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UrlRepository extends JpaRepository<Url, Long> {
-     Url findByOriginUrl(String url);
+public interface UrlRepository extends JpaRepository<ShortenUrl, Long> {
+     ShortenUrl findByOriginUrl(String url);
 }

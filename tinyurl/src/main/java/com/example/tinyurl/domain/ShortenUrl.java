@@ -2,13 +2,12 @@ package com.example.tinyurl.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Objects;
 
 @Getter
 @Entity
-public class Url {
+public class ShortenUrl {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,15 +19,15 @@ public class Url {
     @Column(name="visit_count")
     private Long visitCount = 0L;
 
-    protected  Url(){
+    protected ShortenUrl(){
 
     }
-    private Url(String originUrl) {
+    private ShortenUrl(String originUrl) {
         this.originUrl = originUrl;
     }
 
-    public static Url of(String originUrl) {
-        return new Url(originUrl);
+    public static ShortenUrl of(String originUrl) {
+        return new ShortenUrl(originUrl);
     }
 
     public void increaseVisitCount(){
@@ -38,7 +37,7 @@ public class Url {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Url url)) return false;
+        if (!(o instanceof ShortenUrl url)) return false;
         return Objects.equals(id, url.id);
     }
 
