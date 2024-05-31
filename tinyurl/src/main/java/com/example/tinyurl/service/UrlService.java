@@ -2,6 +2,7 @@ package com.example.tinyurl.service;
 
 import com.example.tinyurl.domain.ShortenUrl;
 import com.example.tinyurl.dto.UrlRequestDto;
+import com.example.tinyurl.dto.UrlResponseDto;
 import com.example.tinyurl.repository.UrlRepository;
 import com.example.tinyurl.util.Base62;
 import com.example.tinyurl.util.UrlUtil;
@@ -30,7 +31,19 @@ public class UrlService {
         this.urlUtil = urlUtil;
     }
 
+    @Transactional(readOnly = true)
+    private ShortenUrl getShortenUrlEntity(String shortenUrl){
+        long id = base62.decode(shortenUrl);
+        return urlRepository.findById(id).orElse(null);
+    }
 
+    @Transactional
+    public UrlResponseDto getShortenUrlResponseDto(String shortenUrl){
+        ShortenUrl url = getShortenUrlEntity(shortenUrl);
+        return UrlResponseDto.of(url.getOriginUrl(), base62.encode(url.getId()), url.getHit());
+    }
+
+    @Transactional
     public String generateShortenUrl(UrlRequestDto urlRequestDto){
         String originUrl = urlRequestDto.getUrl();
 
@@ -50,19 +63,32 @@ public class UrlService {
         return base62.encode(save.getId());
     }
 
-
+    @Transactional(readOnly = true)
     public String getOriginUrl(String shortenUrl){
         long id = base62.decode(shortenUrl);
         ShortenUrl url = urlRepository.findById(id).orElse(null);
 
         if(url != null){
-            url.increaseVisitCount();
-            urlRepository.save(url);
             return urlUtil.fullURL(url.getOriginUrl());
         }
         log.info("get originalUrl is null");
         return null;
     }
+
+    @Transactional
+    public void increaseShortenUrlHit(String shortenUrl){
+        ShortenUrl url = getShortenUrlEntity(shortenUrl);
+        if(url != null)  {
+            url.increaseHit();
+            log.info("hit up");
+            urlRepository.save(url);
+        }
+        else{
+            System.out.println("url이 없음?");
+        }
+    }
+
+
 
 
 }

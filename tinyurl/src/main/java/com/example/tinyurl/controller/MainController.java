@@ -33,7 +33,14 @@ public class MainController {
 
         UrlResponseErrorDto urlResponseErrorDto = UrlResponseErrorDto.of("404", "This url invalid URL");
         return ResponseEntity.ok(urlResponseErrorDto);
-
     }
+//
+    @GetMapping("/{shortenUrl}/info")
+    public ResponseEntity<?> shortenUrlInfo(@PathVariable(value = "shortenUrl") String shortenUrl){
+        UrlResponseDto urlResponseDto = urlService.getShortenUrlResponseDto(shortenUrl);
+        return ResponseEntity.ok(urlResponseDto);
+    }
+
+
 
 }

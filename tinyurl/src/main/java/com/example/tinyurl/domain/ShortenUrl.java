@@ -2,9 +2,11 @@ package com.example.tinyurl.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.Objects;
 
+@ToString
 @Getter
 @Entity
 public class ShortenUrl {
@@ -16,8 +18,8 @@ public class ShortenUrl {
     @Column(name = "origin_url", nullable = false)
     private String originUrl;
 
-    @Column(name="visit_count")
-    private Long visitCount = 0L;
+    @Column(name="hit")
+    private Long hit = 0L;
 
     protected ShortenUrl(){
 
@@ -30,8 +32,8 @@ public class ShortenUrl {
         return new ShortenUrl(originUrl);
     }
 
-    public void increaseVisitCount(){
-        this.visitCount ++;
+    public void increaseHit(){
+        this.hit ++;
     }
 
     @Override

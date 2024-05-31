@@ -1,7 +1,9 @@
 package com.example.tinyurl.dto;
 
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 @Getter
 public class UrlResponseErrorDto {
     private String status;
