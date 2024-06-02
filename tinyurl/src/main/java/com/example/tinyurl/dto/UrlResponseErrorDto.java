@@ -1,23 +1,21 @@
 package com.example.tinyurl.dto;
 
 import lombok.Getter;
-import lombok.ToString;
 
-@ToString
 @Getter
 public class UrlResponseErrorDto {
     private String status;
-    private String msg;
+    private String message;
 
     protected UrlResponseErrorDto(){
     }
 
-    private UrlResponseErrorDto(String status, String msg) {
+    private UrlResponseErrorDto(String status, String message) {
         this.status = status;
-        this.msg = msg;
+        this.message = message;
     }
 
-    public static UrlResponseErrorDto of(String status, String msg) {
-        return new UrlResponseErrorDto(status, msg);
+    public static UrlResponseErrorDto of(String status, String message) {
+        return new UrlResponseErrorDto(status, message);
     }
 }

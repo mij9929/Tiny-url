@@ -20,26 +20,32 @@ public class MainController {
     @Autowired
     private UrlService urlService;
 
-    @PostMapping("/shorten")
-    public ResponseEntity<?> shortenUrl(@RequestBody @Valid UrlRequestDto urlRequestDto) {
-        String originUrl = urlRequestDto.getUrl();
-        log.info("[origin URL] " + originUrl);
-        String shortenUrl= urlService.generateShortenUrl(urlRequestDto);
-        log.info("[encoded URL] " + shortenUrl);
-
-        if(shortenUrl != null) {
-            return ResponseEntity.ok( UrlResponseDto.of(originUrl, shortenUrl));
-        }
-
-        UrlResponseErrorDto urlResponseErrorDto = UrlResponseErrorDto.of("404", "This url invalid URL");
-        return ResponseEntity.ok(urlResponseErrorDto);
-    }
-//
     @GetMapping("/{shortenUrl}/info")
-    public ResponseEntity<?> shortenUrlInfo(@PathVariable(value = "shortenUrl") String shortenUrl){
+    public ResponseEntity<?> getShortenURl(@PathVariable(value = "shortenUrl") String shortenUrl){
         UrlResponseDto urlResponseDto = urlService.getShortenUrlResponseDto(shortenUrl);
         return ResponseEntity.ok(urlResponseDto);
     }
+
+    @PostMapping("/shorten")
+    public ResponseEntity<?> shortenUrl(@RequestBody @Valid UrlRequestDto urlRequestDto) {
+        String originUrl = urlRequestDto.getUrl();
+        String shortenUrl= urlService.generateShortenUrl(urlRequestDto);
+        log.info("[origin URL] " + originUrl);
+        log.info("[encoded URL] " + shortenUrl);
+        UrlResponseDto urlResponseDto = urlService.getShortenUrlResponseDto(shortenUrl);
+        return ResponseEntity.ok(urlResponseDto);
+
+    }
+
+    @DeleteMapping("/{shortenUrl}")
+    public ResponseEntity<Void> deleteShortenUrl(@PathVariable String shortenUrl) {
+        urlService.deleteShortenUrl(shortenUrl);
+        log.info("[Delete] " + shortenUrl);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
 
 
 
