@@ -1,8 +1,11 @@
 package com.example.tinyurl.service;
 
+import com.example.tinyurl.domain.RefererHistory;
 import com.example.tinyurl.domain.ShortenUrl;
 import com.example.tinyurl.dto.UrlRequestDto;
 import com.example.tinyurl.dto.UrlResponseDto;
+import com.example.tinyurl.exception.ShortenUrlNotFoundException;
+import com.example.tinyurl.repository.RefererHistoryRepository;
 import com.example.tinyurl.repository.UrlRepository;
 import com.example.tinyurl.util.Base62;
 import com.example.tinyurl.util.UrlUtil;
@@ -23,24 +26,26 @@ public class UrlService {
     private final Base62 base62;
     private final UrlRepository urlRepository;
     private final UrlUtil urlUtil;
+    private final RefererHistoryRepository refererHistoryRepository;
 
     @Autowired
-    public UrlService(Base62 base62, UrlRepository urlRepository, UrlUtil urlUtil) {
+    public UrlService(Base62 base62, UrlRepository urlRepository, UrlUtil urlUtil, RefererHistoryRepository refererHistoryRepository) {
         this.base62 = base62;
         this.urlRepository = urlRepository;
         this.urlUtil = urlUtil;
+        this.refererHistoryRepository = refererHistoryRepository;
     }
 
     @Transactional(readOnly = true)
     private ShortenUrl getShortenUrlEntity(String shortenUrl){
         long id = base62.decode(shortenUrl);
-        return urlRepository.findById(id).orElse(null);
+        return urlRepository.findById(id).orElseThrow(() -> new ShortenUrlNotFoundException("This URL Not Found", "404"));
     }
 
     @Transactional
     public UrlResponseDto getShortenUrlResponseDto(String shortenUrl){
         ShortenUrl url = getShortenUrlEntity(shortenUrl);
-        return UrlResponseDto.of(url.getOriginUrl(), base62.encode(url.getId()), url.getHit());
+        return UrlResponseDto.of(url.getOriginUrl(), shortenUrl, url.getHit(), url.getCreateAt());
     }
 
     @Transactional
@@ -65,30 +70,24 @@ public class UrlService {
 
     @Transactional(readOnly = true)
     public String getOriginUrl(String shortenUrl){
-        long id = base62.decode(shortenUrl);
-        ShortenUrl url = urlRepository.findById(id).orElse(null);
-
-        if(url != null){
-            return urlUtil.fullURL(url.getOriginUrl());
-        }
-        log.info("get originalUrl is null");
-        return null;
+        ShortenUrl url = getShortenUrlEntity(shortenUrl);
+        return urlUtil.fullURL(url.getOriginUrl());
     }
 
     @Transactional
-    public void increaseShortenUrlHit(String shortenUrl){
+    public void deleteShortenUrl(String shortenUrl) {
         ShortenUrl url = getShortenUrlEntity(shortenUrl);
-        if(url != null)  {
-            url.increaseHit();
-            log.info("hit up");
-            urlRepository.save(url);
-        }
-        else{
-            System.out.println("url이 없음?");
-        }
+        urlRepository.delete(url);
     }
 
+    @Transactional
+    public void increaseShortenUrlHit(String shortenUrl, String referer){
+        ShortenUrl url = getShortenUrlEntity(shortenUrl);
+        url.increaseHit();
+        urlRepository.save(url);
 
+        RefererHistory refererHistory =  RefererHistory.of(url, referer);
+        refererHistoryRepository.save(refererHistory);
 
-
+    }
 }
