@@ -1,21 +1,18 @@
-package com.example.tinyurl.controller;
+package com.example.tinyurl.controller.api;
 
 import com.example.tinyurl.dto.UrlRequestDto;
 import com.example.tinyurl.dto.UrlResponseDto;
-import com.example.tinyurl.dto.UrlResponseErrorDto;
 import com.example.tinyurl.service.UrlService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
 @RequestMapping("/api")
-public class MainController {
+public class ShortenUrlApiController {
 
     @Autowired
     private UrlService urlService;
