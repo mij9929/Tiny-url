@@ -21,7 +21,7 @@ public class UrlUtil {
     }
 
     public String fullURL(String url){
-        return String.format("https://%s", url);
+        return String.format("http://%s", url);
     }
 
     public String normalizeUrl(String originUrl){

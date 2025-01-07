@@ -27,7 +27,7 @@ public class HomeController {
         this.urlService = urlService;
     }
 
-    @GetMapping("/url")
+    @GetMapping("/")
     public String home(){
         return "index.html";
     }

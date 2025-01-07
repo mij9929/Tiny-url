@@ -2,14 +2,14 @@ package com.example.tinyurl.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-@ToString
 @Getter
 @Entity
-public class ShortenUrl {
+public class ShortenUrl extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +21,13 @@ public class ShortenUrl {
     @Column(name="hit")
     private Long hit = 0L;
 
+//    @OneToMany(mappedBy = "shortenUrl", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<RefererHistory> refererHistories;
+
     protected ShortenUrl(){
 
     }
+
     private ShortenUrl(String originUrl) {
         this.originUrl = originUrl;
     }
