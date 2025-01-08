@@ -1,11 +1,9 @@
 package com.example.tinyurl.service;
 
-import com.example.tinyurl.domain.RefererHistory;
 import com.example.tinyurl.domain.ShortenUrl;
 import com.example.tinyurl.dto.UrlRequestDto;
 import com.example.tinyurl.dto.UrlResponseDto;
 import com.example.tinyurl.exception.ShortenUrlNotFoundException;
-import com.example.tinyurl.repository.RefererHistoryRepository;
 import com.example.tinyurl.repository.UrlRepository;
 import com.example.tinyurl.util.Base62;
 import com.example.tinyurl.util.UrlUtil;
@@ -26,14 +24,12 @@ public class UrlService {
     private final Base62 base62;
     private final UrlRepository urlRepository;
     private final UrlUtil urlUtil;
-    private final RefererHistoryRepository refererHistoryRepository;
 
     @Autowired
-    public UrlService(Base62 base62, UrlRepository urlRepository, UrlUtil urlUtil, RefererHistoryRepository refererHistoryRepository) {
+    public UrlService(Base62 base62, UrlRepository urlRepository, UrlUtil urlUtil) {
         this.base62 = base62;
         this.urlRepository = urlRepository;
         this.urlUtil = urlUtil;
-        this.refererHistoryRepository = refererHistoryRepository;
     }
 
     @Transactional(readOnly = true)
@@ -85,9 +81,6 @@ public class UrlService {
         ShortenUrl url = getShortenUrlEntity(shortenUrl);
         url.increaseHit();
         urlRepository.save(url);
-
-        RefererHistory refererHistory =  RefererHistory.of(url, referer);
-        refererHistoryRepository.save(refererHistory);
 
     }
 }
