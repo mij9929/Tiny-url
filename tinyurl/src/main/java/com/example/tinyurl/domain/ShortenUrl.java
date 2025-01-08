@@ -21,6 +21,13 @@ public class ShortenUrl extends BaseEntity{
     @Column(name="hit")
     private Long hit = 0L;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_account_id")
+    private UserAccount  userAccount;
+
+    @OneToMany(mappedBy = "shortenUrl", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RefererHistory> refererHistories;
+
     protected ShortenUrl(){
 
     }
