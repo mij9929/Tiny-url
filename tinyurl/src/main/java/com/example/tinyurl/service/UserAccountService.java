@@ -4,6 +4,7 @@ import com.example.tinyurl.domain.UserAccount;
 import com.example.tinyurl.dto.AccountRequestDto;
 import com.example.tinyurl.dto.AccountResponseDto;
 import com.example.tinyurl.repository.UserAccountRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service
+@Slf4j
 public class UserAccountService {
     private final UserAccountRepository userAccountRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -22,12 +24,15 @@ public class UserAccountService {
     }
 
     public AccountResponseDto register(AccountRequestDto request) {
+        String encodedPassword = bCryptPasswordEncoder.encode(request.getPassword());
         UserAccount user = UserAccount.builder()
                 .username(request.getUsername())
-                .password(request.getPassword())
+                .password(encodedPassword)
                 .build();
+
         userAccountRepository.save(user);
 
+        log.info("Username : " + user.getUsername() );
         return AccountResponseDto.builder().username(user.getUsername()).build();
     }
 

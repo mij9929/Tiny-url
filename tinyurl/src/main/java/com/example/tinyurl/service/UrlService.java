@@ -41,7 +41,7 @@ public class UrlService {
     @Transactional
     public UrlResponseDto getShortenUrlResponseDto(String shortenUrl){
         ShortenUrl url = getShortenUrlEntity(shortenUrl);
-        return UrlResponseDto.of(url.getOriginUrl(), shortenUrl, url.getHit(), url.getCreateAt());
+        return UrlResponseDto.of(url.getOriginUrl(), shortenUrl, url.getHit());
     }
 
     @Transactional

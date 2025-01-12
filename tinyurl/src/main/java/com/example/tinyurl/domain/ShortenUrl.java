@@ -3,8 +3,6 @@ package com.example.tinyurl.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -24,9 +22,6 @@ public class ShortenUrl extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_account_id")
     private UserAccount  userAccount;
-
-    @OneToMany(mappedBy = "shortenUrl", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<RefererHistory> refererHistories;
 
     protected ShortenUrl(){
 

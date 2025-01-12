@@ -2,6 +2,7 @@ package com.example.tinyurl.controller.api;
 
 import com.example.tinyurl.dto.UrlRequestDto;
 import com.example.tinyurl.dto.UrlResponseDto;
+import com.example.tinyurl.dto.UrlResponseErrorDto;
 import com.example.tinyurl.service.UrlService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

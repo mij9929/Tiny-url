@@ -13,10 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Enumeration;
-import java.util.Map;
-
-
 @Slf4j
 @Controller
 public class HomeController {
@@ -27,9 +23,9 @@ public class HomeController {
         this.urlService = urlService;
     }
 
-    @GetMapping("/")
+    @GetMapping({"/", "/main"})
     public String home(){
-        return "index.html";
+        return "main.html";
     }
 
     @GetMapping("/url/{shortenUrl}")
