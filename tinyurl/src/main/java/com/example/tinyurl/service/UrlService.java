@@ -2,7 +2,7 @@ package com.example.tinyurl.service;
 
 import com.example.tinyurl.domain.ShortenUrl;
 import com.example.tinyurl.dto.UrlRequestDto;
-import com.example.tinyurl.dto.UrlResponseDto;
+import com.example.tinyurl.dto.ShortenUrlInfoDto;
 import com.example.tinyurl.exception.ShortenUrlNotFoundException;
 import com.example.tinyurl.repository.UrlRepository;
 import com.example.tinyurl.util.Base62;
@@ -32,16 +32,16 @@ public class UrlService {
         this.urlUtil = urlUtil;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) // db에서 shorten url 조회
     private ShortenUrl getShortenUrlEntity(String shortenUrl){
         long id = base62.decode(shortenUrl);
         return urlRepository.findById(id).orElseThrow(() -> new ShortenUrlNotFoundException("This URL Not Found", "404"));
     }
 
-    @Transactional
-    public UrlResponseDto getShortenUrlResponseDto(String shortenUrl){
+    @Transactional // 조회환 shorten url dto 변환
+    public ShortenUrlInfoDto getShortenUrDto(String shortenUrl){
         ShortenUrl url = getShortenUrlEntity(shortenUrl);
-        return UrlResponseDto.of(url.getOriginUrl(), shortenUrl, url.getHit());
+        return ShortenUrlInfoDto.of(url.getCreateAt(), url.getOriginUrl(), shortenUrl, url.getHit());
     }
 
     @Transactional
