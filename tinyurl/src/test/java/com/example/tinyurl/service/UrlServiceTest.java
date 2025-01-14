@@ -35,7 +35,7 @@ class UrlServiceTest {
     public void givenTestData_whenOriginUrl_thenReturnShortenURL() {
         // given
         UrlRequestDto urlRequestDto = new UrlRequestDto();
-        urlRequestDto.setUrl("www.naver.com");
+        urlRequestDto.setUrl("http://www.naver.com");
         String s = sut.generateShortenUrl(urlRequestDto);
         System.out.println(s);
 

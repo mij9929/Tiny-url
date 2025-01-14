@@ -1,51 +1,100 @@
-.search{
-margin-bottom: auto;
-margin-top: 200px;
-height: 70px;
-background-color: #fff;
-padding: 10px;
+/* 검색 바 */
+.search {
+    margin-top: 100px;
+    width: 100%;
+    max-width: 600px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 30px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.search-input{
-
-color: white;
-border:0;
-outline: 0;
-background: none;
-width: 0;
-margin-top:5px;
-caret-color:transparent;
-line-height: 40px;
-transition: width 0.4s linear;
-
+.search-input {
+    width: 85%;
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s;
+    color: #333;
 }
 
-.search .search-input{
-padding: 0 10px;
-width: 550px;
-caret-color: #536bf6;
-font-size: 21px;
-font-weight: 300;
-color: black;
-transition: width 0.4s linear;
+.search-icon {
+    background-color: #536bf6;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.search:hover>.search-icon{
-background:#1A237E;
-color:#fff;
+.search-icon:hover {
+    background-color: #1A237E;
 }
-.search-icon{
 
-height: 50px;
-width: 50px;
-float: right;
-display: flex;
-justify-content: center;
-align-items: center;
-color: white;
-background-color: #536bf6;
-
+/* 검색 결과 부분 */
+#shortened-url {
+    margin-top: 30px;
+    background-color: white;
+    color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    display: none;  /* 처음에는 숨김 */
 }
-a:link{
-text-decoration: none;
+
+#shortened-url a {
+    color: #536bf6;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* 에러 메시지 */
+#error-message {
+    margin-top: 30px;
+    background-color: #ffebee; /* 연한 빨간색 배경 */
+    color: #d32f2f; /* 진한 빨간색 텍스트 */
+    padding: 15px;
+    border-radius: 8px; /* 모서리를 둥글게 */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    display: none; /* 처음에는 숨김 */
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* 에러 텍스트 강조 */
+#error-text {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* 미디어 쿼리 (반응형 웹) */
+@media (max-width: 768px) {
+    .search {
+        max-width: 100%;
+    }
+
+    .search-input {
+        width: 75%;
+    }
+
+    #shortened-url {
+        width: 90%;
+    }
 }

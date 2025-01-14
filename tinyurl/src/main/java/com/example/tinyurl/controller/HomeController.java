@@ -28,7 +28,7 @@ public class HomeController {
         return "main.html";
     }
 
-    @GetMapping("/url/{shortenUrl}")
+    @GetMapping("/{shortenUrl}")
     public RedirectView redirectUrl( @RequestHeader(value="referer", required = false) String refererHeader, HttpServletResponse response, @PathVariable(value = "shortenUrl") String shortenUrl,
                                      @RequestHeader(value = "Purpose", required = false) String purpose ){
 

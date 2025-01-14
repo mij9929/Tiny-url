@@ -45,24 +45,25 @@ public class UrlService {
     }
 
     @Transactional
-    public String generateShortenUrl(UrlRequestDto urlRequestDto){
+    public String generateShortenUrl(UrlRequestDto urlRequestDto) {
         String originUrl = urlRequestDto.getUrl();
 
-        if(!urlUtil.isValidUrl(originUrl)) {
-            log.info("original Url is not valid");
-            return null;
+        if (!urlUtil.isValidUrl(originUrl)) {
+            log.info("Original URL is not valid");
+            throw new IllegalArgumentException("Invalid URL format.");
         }
 
         String normalizedUrl = urlUtil.normalizeUrl(originUrl);
         Optional<ShortenUrl> existingUrl = Optional.ofNullable(urlRepository.findByOriginUrl(normalizedUrl));
 
-        if(existingUrl.isPresent()){
+        if (existingUrl.isPresent()) {
             return base62.encode(existingUrl.get().getId());
         }
 
         ShortenUrl save = urlRepository.save(ShortenUrl.of(normalizedUrl));
         return base62.encode(save.getId());
     }
+
 
     @Transactional(readOnly = true)
     public String getOriginUrl(String shortenUrl){

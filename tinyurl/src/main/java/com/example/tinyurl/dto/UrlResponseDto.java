@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 
 @ToString
 @Getter
 public class UrlResponseDto {
+    CreatedDate createAt;
     String originUrl;
     String shortUrl;
     Long hit;

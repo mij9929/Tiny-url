@@ -13,16 +13,17 @@
     <input type="text" class="search-input" placeholder="Paste a Long URL..." id="long-url">
     <button class="search-icon" id="go-button">Go</button>
   </div>
+</div>
+<!-- 단축된 URL을 표시할 공간 -->
+<div class ="d-flex justify-content-center h-100">
+<div id="shortened-url" style="display:none; margin-top: 20px;">
+  <p>Shortened URL: <a href="" id="short-url-link" target="_blank"></a></p>
+</div>
 
-  <!-- 단축된 URL을 표시할 공간 -->
-  <div id="shortened-url" style="display:none; margin-top: 20px;">
-    <p>Shortened URL: <a href="" id="short-url-link" target="_blank"></a></p>
-  </div>
-
-  <!-- 에러 메시지를 표시할 공간 -->
-  <div id="error-message" style="display:none; margin-top: 20px; color: red;">
-    <p id="error-text"></p>
-  </div>
+<!-- 에러 메시지를 표시할 공간 -->
+<div id="error-message" style="display:none; margin-top: 20px; color: red;">
+  <p id="error-text"></p>
+</div>
 </div>
 
 
