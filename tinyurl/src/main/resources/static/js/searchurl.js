@@ -2,7 +2,10 @@ document.getElementById("go-button").addEventListener("click", function (event) 
     event.preventDefault(); // 기본 동작 방지
 
     const longUrlInput = document.getElementById("long-url");
-    const longUrl = longUrlInput.value.trim(); // 입력값 가져오기 및 공백 제거
+    let longUrl = longUrlInput.value.trim(); // 입력값 가져오기 및 공백 제거
+    if (!longUrl.startsWith("http://") && !longUrl.startsWith("https://")) {
+        longUrl = "https://" + longUrl;
+    }
 
     // 입력된 URL이 비어 있는지 확인
     if (!longUrl) {
@@ -44,6 +47,11 @@ function handleApiResponse(data) {
         shortUrlLink.href = data.shortUrl;
         shortUrlLink.textContent = data.shortUrl;
 
+        const shortUrlDetail = document.getElementById("short-url-detail");
+        const baseurl = window.location.origin;
+        shortUrlDetail.href = `${baseurl}/api/${data.shortUrl}/info`;
+        shortUrlDetail.text = "View Details";
+        console.log(baseurl);
         document.getElementById("shortened-url").style.display = "block";
         document.getElementById("error-message").style.display = "none"; // 에러 메시지 숨기기
     } else {
